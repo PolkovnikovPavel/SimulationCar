@@ -1,0 +1,14 @@
+version=0.6.1
+N_car=1
+N_motorcycle=1
+Speed=24
+CarProbability=4
+MotorcycleProbability=4
+CarLiveTime=1000000
+MotorcycleLiveTime=1000000
+Is_text=true
+Is_dialog_check=false
+CarRunPriority=Normal
+MotorcycleRunPriority=Normal
+IsCarRun=true
+IsMotorcycleRun=true
