@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.util.Objects;
 
 public class Main {
-    static String version = "0.6.1";
+    static String version = "0.7.0";
     public static JFrame frame;
     public static JPanel mainPanel = new JPanel(null);   // Используем null layout
     public static JPanel controlPanel = new JPanel();
@@ -34,6 +34,8 @@ public class Main {
     public static JSlider sliderV = new JSlider(JSlider.HORIZONTAL, 0, 200, 20);
     public static JButton viewObjectsButton = new JButton("Текущие объекты");
     public static JButton viewConnectedUsersButton = new JButton("Все пользователи");
+    public static JButton loadObjectsFromDBButton = new JButton("Загрузить из БД");
+    public static JButton clearDBButton = new JButton("Очистить БД");
 
     public static JPanel intelligenceGrid = new JPanel(new GridLayout(2, 2));
     public static JPanel priorityGrid = new JPanel(new GridLayout(2, 2));
@@ -163,12 +165,19 @@ public class Main {
 
 
 
-        // кнопка отображения текущих объектов
+        // Блок кнопока внизу
         JPanel base2Grid = new JPanel(new GridLayout(1, 2, 20, 2));
         base2Grid.add(viewObjectsButton);
         base2Grid.add(viewConnectedUsersButton);
 
+        JPanel base3Grid = new JPanel(new GridLayout(1, 2));
+        base3Grid.add(loadObjectsFromDBButton);
+        base3Grid.add(clearDBButton);
+        loadObjectsFromDBButton.setBackground(new Color(105, 179, 253));
+        clearDBButton.setBackground(new Color(255, 71, 100, 255));
+
         controlPanel.add(base2Grid);
+        controlPanel.add(base3Grid);
 
 
 

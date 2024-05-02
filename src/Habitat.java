@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.*;
 import java.io.*;
@@ -21,7 +22,7 @@ class Habitat extends JPanel {
     private int count_motorcycle = 0;
     private int timeElapsed;
     private int lastTimeElapsed;
-    private boolean is_start;
+    public boolean is_start;
     private boolean is_lastStart = false;
     private boolean is_text;
     private boolean is_dialog_check;
@@ -40,6 +41,15 @@ class Habitat extends JPanel {
         this.allObjecksID = new HashSet<>();
         this.objectBirthdayByID = new TreeMap<>();
         this.configManager = new ConfigManager(this);
+
+        try {
+            ConnDB.Conn();
+            ConnDB.CreateDB();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
         this.is_start = false;
@@ -284,7 +294,8 @@ class Habitat extends JPanel {
     }
 
     public void viewObjects(JFrame frame) {
-        ViewObjectsDialog dialog = new ViewObjectsDialog(frame, objectBirthdayByID);
+        pause();
+        ViewObjectsDialog dialog = new ViewObjectsDialog(frame, objectBirthdayByID, this);
         dialog.setVisible(true);
     }
 

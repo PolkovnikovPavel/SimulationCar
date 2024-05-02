@@ -4,6 +4,8 @@ import java.io.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AddingActionListener implements KeyListener {
@@ -33,6 +35,8 @@ public class AddingActionListener implements KeyListener {
         Main.saveButton.addActionListener(saveAction);
         Main.openButton.addActionListener(openAction);
         Main.viewConnectedUsersButton.addActionListener(viewConnectedUsersAction);
+        Main.loadObjectsFromDBButton.addActionListener(loadObjectsFromDBAction);
+        Main.clearDBButton.addActionListener(clearDBAction);
 
         // Блок времени жизни
         String[] labels = {"Автомобили", "Мотоциклы"};
@@ -148,6 +152,8 @@ public class AddingActionListener implements KeyListener {
     private ActionListener openAction;
     private ActionListener consoleAction;
     private ActionListener viewConnectedUsersAction;
+    private ActionListener loadObjectsFromDBAction;
+    private ActionListener clearDBAction;
     void initActionListeners() {
         startAction = new ActionListener() {
             @Override
@@ -240,6 +246,11 @@ public class AddingActionListener implements KeyListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 habitat.configManager.save();
+                try {
+                    ConnDB.CloseDB();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 System.out.println("Окно закрывается...");
             }
         };
@@ -316,6 +327,38 @@ public class AddingActionListener implements KeyListener {
             }
         };
 
+        loadObjectsFromDBAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!habitat.is_start) {
+                    habitat.start();
+                    Main.stopButton.setEnabled(true);
+                    Main.startButton.setEnabled(false);
+                }
+                try {
+                    ArrayList<GameObject> objects = ConnDB.ReadObjects(habitat);
+                    for (GameObject object : objects) {
+                        habitat.addObject(object);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                System.out.println("Загрузка из БД");
+                Main.frame.requestFocusInWindow();
+            }
+        };
+
+        clearDBAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ConnDB.clearDB();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                Main.frame.requestFocusInWindow();
+            }
+        };
 
 
     }

@@ -3,8 +3,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 public abstract class GameObject implements IBehaviour, Serializable {
-    protected final int ID;
-    protected final int birthday;
+    protected int ID;
+    protected int birthday;
     protected int type;
     protected int x;
     protected int y;
@@ -25,6 +25,9 @@ public abstract class GameObject implements IBehaviour, Serializable {
         this.speed = (double) speed / 10;
         type = -1;
 
+    }
+    public void loadObject(int birthday) {
+        this.birthday = birthday;
     }
 
     public void setImg() {}

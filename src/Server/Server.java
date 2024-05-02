@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Server {
-    static String version = "0.6.1";
+    static String version = "0.7.0";
     private static final int PORT = 12333;
     protected static final ArrayList<ClientHandler> allClients = new ArrayList<>();
 
